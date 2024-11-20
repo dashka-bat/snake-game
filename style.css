@@ -1,0 +1,16 @@
+#background {
+  margin: 30px auto;
+  background-image: url(green-grass-texture-background-lawn-backyard-wallpaper-desktop-picture-park-d-software-rendering-174757719.webp);
+  position: relative;
+}
+.snake {
+  background-color: black;
+  position: absolute;
+  border-radius: 4px;
+  width: 20px;
+  height: 20px;
+}
+#directionbutton {
+  width: 50px;
+  height: 20px;
+}
