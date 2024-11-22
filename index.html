@@ -10,7 +10,7 @@
   <body>
     <div style="text-align: center">
       <button id="directionbutton" onclick="start()">start</button>
-      <button id="directionbutton">pause</button>
+      <button id="directionbutton" onclick="pause()">pause</button>
       <button id="directionbutton">restart</button>
     </div>
     <div id="background"></div>
@@ -79,9 +79,15 @@
       }
       function start() {
         if (!IntervalId) {
-          IntervalId = setInterval(gameLoop, 100);
+          IntervalId = setInterval(gameLoop, 200);
         }
       }
+
+      function pause() {
+        clearInterval(IntervalId);
+        IntervalId = null;
+      }
+      function restart() {}
       function goleft() {
         headleft = headleft - 1;
         if (headleft < 0) {
@@ -110,13 +116,13 @@
 
       function render() {
         const snakeHtml = `
-        <div class="snake" style="width: ${1 * config.size}px;${
+              <div class="snake" style="width: ${1 * config.size}px;${
           1 * config.size
         }px;top:${headtop * config.size}px;left:${
           headleft * config.size
         }px"></div>
 
-        `;
+              `;
         boardEl.innerHTML = snakeHtml;
       }
       render();
