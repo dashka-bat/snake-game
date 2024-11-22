@@ -11,7 +11,7 @@
     <div style="text-align: center">
       <button id="directionbutton" onclick="start()">start</button>
       <button id="directionbutton" onclick="pause()">pause</button>
-      <button id="directionbutton">restart</button>
+      <button id="directionbutton" onclick="restart()">restart</button>
     </div>
     <div id="background"></div>
     <div style="text-align: center">
@@ -27,10 +27,15 @@
       </button>
     </div>
     <script>
-      let headtop = 10;
-      let headleft = 12;
-      let direction = "up";
+      let headtop = 5;
+      let headleft = 5;
+      let direction = "right";
       let IntervalId = null;
+      let tails=[
+        {x:2 ,y:5},
+        {x:3 ,y:5},
+        {x:4 ,y:5},
+      ]
 
       const config = {
         size: 20,
@@ -87,7 +92,11 @@
         clearInterval(IntervalId);
         IntervalId = null;
       }
-      function restart() {}
+      
+      function restart() {
+        
+        start();
+      }
       function goleft() {
         headleft = headleft - 1;
         if (headleft < 0) {
@@ -97,6 +106,8 @@
       }
 
       function gameLoop() {
+        tails.push({x:headleft,y:headtop})
+        tails.shift();
         switch (direction) {
           case "up":
             goUp();
@@ -113,23 +124,46 @@
             break;
         }
       }
-
+      function Keydown(event){
+        const key = event.key;
+        switch (key){
+          case "ArrowUp":
+            changedirection("up");
+            break;
+            case "ArrowDown":
+            changedirection("down");
+            break;
+            case "ArrowLeft":
+            changedirection("left");
+            break;
+            case "ArrowRight":
+            changedirection("right");
+            break;
+        }
+      } 
+      document.addEventListener("keydown", Keydown)
       function render() {
-        const snakeHtml = `
-              <div class="snake" style="width: ${1 * config.size}px;${
+        let tailsHtml=""
+        for(let i=0;i<tails.length;i++){
+tailsHtml+=` <div class="snake" style="width: ${1 * config.size}px;${
           1 * config.size
-        }px;top:${headtop * config.size}px;left:${
-          headleft * config.size
-        }px"></div>
+        }px;top:${tails[i].y * config.size}px;left:${
+          tails[i].x * config.size
+        }px"></div>`
+        }
+        // const headHtml = `
+        //       <div class="snake" style="width: ${1 * config.size}px;${
+        //   1 * config.size
+        // }px;top:${headtop * config.size}px;left:${
+        //   headleft * config.size
+        // }px"></div>
 
-              `;
-        boardEl.innerHTML = snakeHtml;
+        //       `;
+         const  SnakeHtml=` ${tailsHtml}`;
+        boardEl.innerHTML = SnakeHtml;
       }
-      render();
-      addEventListener("keydown", (keydown) => {});
-
-      onkeydown = (event) => {};
-      onkeydown = (event) => {};
+      
+      
     </script>
   </body>
 </html>
